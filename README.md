@@ -10,6 +10,6 @@ Zsteg : b1,rgb,lsb,xy .. text: "Hello, world!EOFq`#"
 ```
 # Etat : 
 
-Et le programme décode.
+Et le programme décode et encode un fichier en PNG
 
 Il faut maintenant faire une vraie CLI

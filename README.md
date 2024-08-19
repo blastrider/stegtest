@@ -8,6 +8,7 @@ on peut debug avec https://www.aperisolve.com
 Zsteg : b1,rgb,lsb,xy .. text: "Hello, world!EOFq`#"
 
 ```
+# Etat : 
 
 Et le programme décode.
 

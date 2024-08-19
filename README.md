@@ -1,4 +1,4 @@
-# Stegano
+# Steganotest
 
 Permet de cacher des données dans une image.
 

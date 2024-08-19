@@ -37,16 +37,23 @@ fn decode_message_from_image(image_path: &str) -> Result<String, Box<dyn Error>>
     let mut bits = Vec::new();
 
     for pixel in img.pixels() {
-        for channel in pixel.0.iter().take(3) {
+        for channel in pixel.0.iter().take(3) { // Prendre en compte les 3 canaux (RGB)
             bits.push(channel & 1);
         }
     }
 
-    let bytes = bits.chunks(8).map(|chunk| {
-        chunk.iter().enumerate().fold(0, |acc, (i, &bit)| acc | (bit << (7 - i)))
-    }).collect::<Vec<_>>();
+    let mut bytes = Vec::new();
+    for chunk in bits.chunks(8) {
+        let byte = chunk.iter().enumerate().fold(0, |acc, (i, &bit)| acc | (bit << (7 - i)));
+        bytes.push(byte);
+    }
 
+    // Convertir les octets en une chaîne de caractères
     let decoded_message = String::from_utf8_lossy(&bytes);
+
+    // Debug: afficher le message brut décodé
+    //println!("Decoded raw message: {:?}", decoded_message);
+
     if let Some(end_pos) = decoded_message.find(END_MARKER) {
         return Ok(decoded_message[..end_pos].to_string());
     }
@@ -55,12 +62,12 @@ fn decode_message_from_image(image_path: &str) -> Result<String, Box<dyn Error>>
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let input_image = "prendre-soin_duree-vie-chat.jpg";
-    let output_image = "prendre-soin_duree-vie-chat_modifi.jpg";
-    let message = "Hello, world! EOF";
+    let input_image = "preparing_for_web1.png"; 
+    let output_image = "preparing_for_web1_unenc3.png";
+     let message = "Hello, world!3";
 
-    encode_message_in_image(input_image, output_image, message)?;
-    println!("Message hidden successfully in {}", output_image);
+     encode_message_in_image(input_image, output_image, message)?;
+    println!("Message hidden successfully in {}", output_image); 
 
     let decoded_message = decode_message_from_image(output_image)?;
     println!("Decoded message: {}", decoded_message);
